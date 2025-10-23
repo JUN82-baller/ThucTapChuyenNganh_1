@@ -20,3 +20,6 @@ df=df[(df['magnitude']>=0)&(df['magnitude']<=10)]
 
 df=df[(df['latitude'].between(-90,90)& (df['longitude'].between(-180,180)))]
 print("Data validation completed: magnitude, latitude, and longitude values are within valid ranges.")
+
+df.to_sql('earthquake_data', con=engine, if_exists='replace', index=False)
+print("Dữ liệu đã được ghi vào bảng 'earthquake_data' trong MySQL.")
