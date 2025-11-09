@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "pinia-plugin-persistedstate": "^4.7.1",
+    "uniqolor": "^1.1.1",
+    "vue-material-design-icons": "^5.3.1"
+  }
+}
