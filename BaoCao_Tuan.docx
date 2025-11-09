@@ -1,5 +1,15 @@
-Cong viec hang tuan bao cao thay
-Tuan1 : da dang ky dataset name la 
-lam sach du leiu va luu lai file csv
-Tuan2:
-viet code da duoc duoc file cvs va dipc vap jeoi tjpmg dakmg cau truc du lieu
+Báo cáo tuần 1
+  1. Chọn đề tài, chọn công nghệ
+  2. Chuẩn bị kiến thức cơ bản về công nghệ\
+Báo cáo tuần 2
+  1. Học cách sử dụng git
+  2. Tạo repo trên github
+Báo cáo tuần 3:
+  1. Sử dụng Pycharm, Anacoda để phục vụ cho lập trình python với framework Django
+  2. Chọn giao diện và có được giao diện lấy từ themewagon.com
+  3. Chỉnh sử cho phù hợp với đề tài
+Báo cáo tuần 4:
+  1. Thêm phần admin
+  2. Tạo templates
+  3. phân chia backedn, frontedn thành 2 file khác nhau
+  4. Thêm framework Vue
