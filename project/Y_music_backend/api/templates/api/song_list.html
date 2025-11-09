@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>🎶 Y Music Player</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #121212;
+            color: #fff;
+            padding: 40px;
+        }
+        h1 {
+            margin-bottom: 30px;
+        }
+        .controls-global {
+            margin-bottom: 30px;
+        }
+        .controls-global button {
+            background-color: #1db954;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .controls-global button:hover {
+            background-color: #1ed760;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 15px;
+            text-align: left;
+        }
+        th {
+            background-color: #1e1e1e;
+        }
+        tr:nth-child(even) {
+            background-color: #1a1a1a;
+        }
+        audio {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎧 Danh sách bài hát</h1>
+
+    <div class="controls-global">
+        <button onclick="playAll()">▶️ </button>
+        <button onclick="playNext()">⏭️ </button>
+        <button onclick="playPause()">⏯️</button>
+        <button onclick="toggleReplay()" id="replay-btn">Replay: Bật</button>
+    </div>
+
+
+    <table>
+        <thead>
+            <tr>
+                <th>Bài hát</th>
+                <th>Trình phát</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for song in songs %}
+            <tr>
+                <td>{{ song.title }}{% if song.artist %} – {{ song.artist }}{% endif %}</td>
+                <td>
+                    <audio id="audio-{{ forloop.counter }}" controls>
+                        <source src="{{ song.audio_file.url }}" type="audio/mpeg">
+                        Trình duyệt không hỗ trợ audio.
+                    </audio>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+    const audios = Array.from(document.querySelectorAll('audio'));
+    let currentIndex = -1;
+    let autoReplay = true; // luôn bật replay
+
+    function stopAll() {
+        audios.forEach(audio => {
+            audio.pause();
+            audio.currentTime = 0;
+        });
+        currentIndex = -1;
+        clearHighlight();
+    }
+
+    function playAll() {
+        stopAll();
+        currentIndex = 0;
+        audios[currentIndex].play();
+    }
+
+    function playPause() {
+        if (currentIndex >= 0 && currentIndex < audios.length) {
+            const audio = audios[currentIndex];
+            if (audio.paused) {
+                audio.play();
+            } else {
+                audio.pause();
+            }
+        } else if (audios.length > 0) {
+            currentIndex = 0;
+            audios[currentIndex].play();
+        }
+    }
+
+    function playNext() {
+        if (currentIndex >= 0 && currentIndex < audios.length - 1) {
+            audios[currentIndex].pause();
+            audios[currentIndex].currentTime = 0;
+            currentIndex++;
+            audios[currentIndex].play();
+        } else if (autoReplay) {
+            currentIndex = 0;
+            audios[currentIndex].play();
+        }
+    }
+
+    function playPrevious() {
+            if (currentIndex > 0) {
+                audios[currentIndex].pause();
+                audios[currentIndex].currentTime = 0;
+                currentIndex--;
+                audios[currentIndex].play();
+            }
+        }
+
+    function clearHighlight() {
+        document.querySelectorAll('tr').forEach(row => {
+            row.style.backgroundColor = '';
+        });
+    }
+
+    function highlightRow(index) {
+        clearHighlight();
+        const row = audios[index].closest('tr');
+        if (row) row.style.backgroundColor = '#333';
+    }
+    function toggleReplay() {
+    autoReplay = !autoReplay;
+    const btn = document.getElementById('replay-btn');
+    btn.textContent = autoReplay ? ' Replay: Bật' : 'Replay: Tắt';
+    }
+
+    audios.forEach((audio, index) => {
+        audio.addEventListener('play', () => {
+            audios.forEach((other, i) => {
+                if (i !== index) {
+                    other.pause();
+                    other.currentTime = 0;
+                }
+            });
+            currentIndex = index;
+            highlightRow(index);
+        });
+
+        audio.addEventListener('ended', () => {
+            if (index === currentIndex) {
+                playNext();
+            }
+        });
+    });
+    </script>
+</body>
+</html>
+

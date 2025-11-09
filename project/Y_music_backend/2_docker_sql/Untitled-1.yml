@@ -1,0 +1,22 @@
+services:
+ postgres:
+ image: postgres:13
+ eviromment:
+  POSTGRES_USER: airflow
+  POSTGRES_PASSWORD: airflow
+  POSTGRES_DB: airflow
+ volumes:
+  -  postgres-db-volume:/var/lib/postgresql/data
+ healthcheck:
+  test: ["CND", "pg_isready", "-U", "airflow"]
+  interval: 5s
+  retries: 5
+ restart: alawys
+
+ docker run -it \
+  -e POSTGRES_USER="root" \
+  -e POSTGRES_PASSWORD="root" \
+  -e POSTGRES_DB="earth_quake" \
+  -v d:/Ai/week1/2_docker_sql/earth_quake_postgres_data:/var/lib/postgresql/data \
+  -p 5432:5432 \
+  postgres:13
