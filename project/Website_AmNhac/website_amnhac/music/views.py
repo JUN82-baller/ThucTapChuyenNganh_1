@@ -96,7 +96,7 @@ def activate_account(request, user_id):
     return redirect("login")
 
 
-def logout(request):
+def logout_views(request):
     """Đăng xuất"""
     auth_logout(request)
     return redirect("home")

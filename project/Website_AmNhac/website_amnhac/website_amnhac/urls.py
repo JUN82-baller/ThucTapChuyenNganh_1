@@ -31,9 +31,9 @@ urlpatterns = [
     path("contact/", views.contact, name="contact"),
     path("login/", views.login, name="login"),
     path("dangky/",views.register_view, name="dangky"),
-    path('logout/', views.logout, name='logout'),
-    path("xacthuc/<int:user_id>/", views.activate_account, name="activate"),
+        path("xacthuc/<int:user_id>/", views.activate_account, name="activate"),
     path("customer/", views.customer, name="customer"),
+    path("logout",views.logout_views, name="logout"),
     # path("cart/", views.view_cart, name="view_cart"),
 ]
 

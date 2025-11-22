@@ -87,12 +87,19 @@
 
                                 <!-- Login/Register & Cart Button -->
                                 <div class="login-register-cart-button d-flex align-items-center">
-                                    <!-- Login/Register -->
+                                   {% if user.is_authenticated %}
                                     <div class="login-register-btn mr-50">
-                                        <a href="{% url 'login' %}" id="loginBtn">Login</a>
-                                        <a href="{% url 'dangky' %}" id="loginBtn"> Register</a>
+                                        <span class="text-white mr-2">Hello, {{ user.username }}</span>
+                                        <a href="{% url 'logout' %}" id="logoutBtn">Logout</a>
                                     </div>
-                                    
+
+                                <!-- Nếu chưa đăng nhập -->
+                                {% else %}
+                                    <div class="login-register-btn mr-50">
+                                        <a href="{% url 'login' %}" id="loginBtn">Login |</a>
+                                        <a href="{% url 'dangky' %}" id="registerBtn">Register</a>
+                                    </div>
+                                {% endif %}
 
                                     <!-- Cart Button -->
                                     <div class="cart-btn">
