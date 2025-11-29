@@ -6,14 +6,38 @@ from django.conf import settings
 from django.contrib.auth.models import User
 
 
+from .models import Album
+
+
 def home(request):
     """Trang chủ"""
     return render(request, 'music/index.html')
 
 
 def albums_store(request):
-    """Trang albums"""
-    return render(request, 'music/albums-store.html')
+    """Trang albums với lọc theo chữ cái hoặc số"""
+    letter = request.GET.get('letter')
+
+    if letter == '0':  # lọc theo số
+        albums = Album.objects.filter(title__regex=r'^[0-9]')
+    elif letter:
+        albums = Album.objects.filter(title__istartswith=letter)
+    else:
+        albums = Album.objects.all()
+
+    return render(request, 'music/albums-store.html', {
+        'albums': albums
+    })
+
+def albums_detail(request, album_id):
+
+    album = get_object_or_404(Album, id=album_id)
+    songs = album.songs.all()  # assuming Song has ForeignKey(Album, related_name='songs')
+
+    return render(request, 'music/albums_detail.html', {
+        'album': album,
+        'songs': songs
+    })
 
 
 def events(request):
@@ -100,3 +124,4 @@ def logout_views(request):
     """Đăng xuất"""
     auth_logout(request)
     return redirect("home")
+

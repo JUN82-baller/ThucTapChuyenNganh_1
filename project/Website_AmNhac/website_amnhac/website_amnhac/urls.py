@@ -34,6 +34,7 @@ urlpatterns = [
         path("xacthuc/<int:user_id>/", views.activate_account, name="activate"),
     path("customer/", views.customer, name="customer"),
     path("logout",views.logout_views, name="logout"),
+    path('album/<int:album_id>/', views.albums_detail, name='albums_detail'),
     # path("cart/", views.view_cart, name="view_cart"),
 ]
 
