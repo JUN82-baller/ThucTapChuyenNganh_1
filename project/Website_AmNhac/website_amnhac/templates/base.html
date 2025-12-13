@@ -82,29 +82,36 @@
                                     <li><a href="{% url 'events' %}">Event</a></li>
                                     <li><a href="{% url 'blog' %}">News</a></li>
                                     <li><a href="{% url 'contact' %}">Contact</a></li>
+                                    {% if user.is_authenticated or user.is_staff %}
+                                    <li><a href="{% url 'account' %}">User</a></li>
+                                    {% endif %}
+                                    {% if user.is_staff %}
                                     <li><a href="{% url 'customer' %}">Customer</a></li>
+                                    {% endif %}
                                 </ul>
 
                                 <!-- Login/Register & Cart Button -->
+                                <!--Neu da dang nhap -->
                                 <div class="login-register-cart-button d-flex align-items-center">
-                                   {% if user.is_authenticated %}
+                                    {% if user.is_authenticated %}
+                                    <!--Neu da dang nhap -->
                                     <div class="login-register-btn mr-50">
-                                        <span class="text-white mr-2">Hello, {{ user.username }}</span>
+                                        <span class="text-white mr-2">Hello,<strong> {{ user.username }} </strong></span>
+                                        <span class="text-white mr-2"></span>
                                         <a href="{% url 'logout' %}" id="logoutBtn">Logout</a>
                                     </div>
-
-                                <!-- Nếu chưa đăng nhập -->
-                                {% else %}
+                                    {% else %}
                                     <div class="login-register-btn mr-50">
                                         <a href="{% url 'login' %}" id="loginBtn">Login |</a>
-                                        <a href="{% url 'dangky' %}" id="registerBtn">Register</a>
+                                        <a href="{% url 'register' %}" id="registerBtn">Register</a>
                                     </div>
-                                {% endif %}
+                                    {% endif %}
 
                                     <!-- Cart Button -->
                                     <div class="cart-btn">
-                                        <p><span class="icon-shopping-cart"></span> <span>1</span></p>
-
+                                        <a href="{% url 'cart' %}">
+                                        <p><span class="icon-shopping-cart"></span> <span>{{ cart_quantity }}</span></p>
+                                        </a>
                                     </div>
                                 </div>
                             </div>

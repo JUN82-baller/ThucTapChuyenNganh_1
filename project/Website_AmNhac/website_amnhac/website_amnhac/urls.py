@@ -29,16 +29,29 @@ urlpatterns = [
     path("events/", views.events, name="events"),
     path("blog/", views.blog, name="blog"),
     path("contact/", views.contact, name="contact"),
-    path("login/", views.login, name="login"),
-    path("dangky/",views.register_view, name="dangky"),
-        path("xacthuc/<int:user_id>/", views.activate_account, name="activate"),
+    path("login/", views.login_views, name="login"),
+    path("register/", views.register_view, name="register"),
     path("customer/", views.customer, name="customer"),
     path("logout",views.logout_views, name="logout"),
     path('album/<int:album_id>/', views.albums_detail, name='albums_detail'),
-    # path("cart/", views.view_cart, name="view_cart"),
+    path("album_form/", views.add_form, name="add_form"),
+    path("add_artist", views.add_artist, name="add_artist"),
+    path("album/<int:album_id>/edit/", views.edit_album, name="edit_album"),
+    path("album/<int:album_id>/delete/", views.delete_album, name="delete_album"),
+    path('album/<int:album_id>/play/', views.play_first_song, name='play_first_song'),
+    path("album/<int:album_id>/add_to_cart/", views.add_to_cart, name="add_to_cart"),
+    # Giỏ hàng
+    path("cart/", views.cart, name="cart"),
+    path("cart/update/<int:album_id>/", views.update_cart, name="update_cart"),
+    path("cart/remove/<int:album_id>/", views.remove_from_cart, name="remove_from_cart"),
+    #THanh toan
+    path("checkout/", views.checkout, name="checkout"),
+    path("checkout/success/<int:order_id>/", views.checkout_success, name="checkout_success"),
+    #Account
+    path("account/", views.account_view , name="account"),
 ]
 
 # Phục vụ static files trong development
 if settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS[0])
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

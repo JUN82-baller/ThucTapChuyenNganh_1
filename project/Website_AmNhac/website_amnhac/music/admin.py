@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Artist, Album, Song
+from .models import Artist, Album, Song, Order,OrderItem
 # Register your models here.
 @admin.register(Artist)
 class ArtistAdmid(admin.ModelAdmin):
@@ -17,3 +17,5 @@ class SongAdmin(admin.ModelAdmin):
     list_display = ('title','album', 'duration')
     search_fields = ('title',)
 
+admin.site.register(Order)
+admin.site.register(OrderItem)

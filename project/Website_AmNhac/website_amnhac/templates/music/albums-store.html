@@ -17,6 +17,10 @@
     <!-- ##### Album Catagory Area Start ##### -->
     <section class="album-catagory section-padding-100-0">
         <div class="container">
+
+           {% if user.is_staff %}
+            <a href="{% url 'add_form' %}" class="btn btn-primary">Add Album</a>
+            {% endif %}
             <div class="row">
                 <div class="col-12">
                     <div class="browse-by-catagories catagory-menu d-flex flex-wrap align-items-center mb-70">
@@ -53,7 +57,7 @@
             </div>
 
            <div class="row oneMusic-albums">
-                {% for album in albums %}
+                {% for album in page_obj %}
                 <!-- Single Album -->
                 <div class="col-12 col-sm-4 col-md-3 col-lg-2 single-album-item {{ album.title|first|lower }}">
                     <div class="single-album">
@@ -61,10 +65,20 @@
                             <img src="{{ album.cover.url }}" alt="{{ album.title }}">
                         {% endif %}
                         <div class="album-info">
+                            {% if user.is_staff %}
                             <a href="{% url 'albums_detail' album.id %}">
+                                {% endif %}
                                 <h5>{{ album.title }}</h5>
                             </a>
                             <p>{{ album.artist.name }}</p>
+
+                        </div>
+                        <!-- Action buttons -->
+                        <div class="mt-2">
+                             {% if user.is_staff %}
+                            <a href="{% url 'edit_album' album.id %}" class="btn btn-sm btn-primary mr-1">Edit</a>
+                            <a href="{% url 'delete_album' album.id %}" class="btn btn-sm btn-danger">Delete</a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -82,7 +96,7 @@
     <div class="oneMusic-buy-now-area mb-100">
         <div class="container">
             <div class="row">
-                {% for album in albums %}
+                {% for album in page_obj %}
                 <!-- Single Album Area -->
                 <div class="col-12 col-sm-6 col-md-3">
                     <div class="single-album-area">
@@ -92,16 +106,23 @@
                             <div class="album-price">
                                 <p>{{ albums.price }}</p>
                             </div>
-                            <!-- Play Icon -->
+                            <!-- Play Icon  -->
                             <div class="play-icon">
-                                <a href="#" class="video--play--btn"><span class="icon-play-button"></span></a>
+                                <a href="{% url 'play_first_song' album.id %}" class="play-link">
+                                    <span class="icon-play-button"></span>
+                                </a>
                             </div>
                         </div>
                         <div class="album-info">
-                            <a href="#">
+                            <a href="{% url 'albums_detail' album.id %}">
                                 <h5>{{ album.title }}</h5>
                             </a>
                             <p>{{ album.artist }}</p>
+                        </div>
+                        <div class="mt-2">
+                            <a href="{% url 'add_to_cart' album.id %}" class="btn btn-sm btn-success">
+                                <i class="fa fa-shopping-cart"></i> Add to Cart
+                            </a>
                         </div>
                     </div>
 
@@ -114,8 +135,10 @@
             <div class="row">
                 <div class="col-12">
                     <div class="load-more-btn text-center">
-                        <a href="#" class="btn oneMusic-btn">Load More <i class="fa fa-angle-double-right"></i></a>
+                        {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}" class="btn oneMusic-btn">Load More <i class="fa fa-angle-double-right"></i></a>
                     </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -142,7 +165,7 @@
             <div class="row">
                 <!-- Single Song Area -->
                 <div class="col-12">
-                    {% for album in albums %}
+                    {% for album in page_obj %}
                     <div class="single-song-area mb-30 d-flex flex-wrap align-items-end">
                         <div class="song-thumbnail">
                             <img src="{{album.cover.url}}" alt="{{album.title}}">
