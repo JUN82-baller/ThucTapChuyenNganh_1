@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow">
+        <div class="card-body text-center">
+            <h2 class="text-success mb-3">✅ Thanh toán thành công!</h2>
+            <p class="lead">Đơn hàng <strong>#{{ order.id }}</strong> đã được tạo thành công.</p>
+            <p><strong>Tổng tiền:</strong> {{ order.get_total }} VNĐ</p>
+        </div>
+
+        <h4 class="mt-4 ms-3">Chi tiết đơn hàng</h4>
+        <div class="table-responsive px-3 pb-3">
+            <table class="table table-bordered table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Album</th>
+                        <th>Số lượng</th>
+                        <th>Giá</th>
+                        <th>Tổng</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in order.items.all %}
+                    <tr>
+                        <td>{{ item.album.title }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.price }} VNĐ</td>
+                        <td>{{ item.total_price }} VNĐ</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="text-center mb-4">
+            <a href="{% url 'albums' %}" class="btn btn-lg btn-primary">
+                 Tiếp tục mua sắm
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

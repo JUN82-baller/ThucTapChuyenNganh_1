@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">🛒 Giỏ hàng của bạn</h2>
+
+    {% if cart_items %}
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">Album</th>
+                    <th scope="col">Số lượng</th>
+                    <th scope="col">Giá</th>
+                    <th scope="col">Tổng</th>
+                    <th scope="col">Tác vụ</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart_items %}
+                <tr>
+                    <td><strong>{{ item.album.title }}</strong></td>
+                    <td>
+                        <form method="post" action="{% url 'update_cart' item.album.id %}" class="d-flex">
+                            {% csrf_token %}
+                            <input type="number" name="quantity" value="{{ item.quantity }}" min="1"
+                                   class="form-control form-control-sm me-2" style="width:80px;">
+                            <button type="submit" class="btn btn-sm btn-outline-primary">Cập nhật</button>
+                        </form>
+                    </td>
+                    <td>{{ item.album.price }} VNĐ</td>
+                    <td><strong>{{ item.total_price }} VNĐ</strong></td>
+                    <td>
+                        <a href="{% url 'remove_from_cart' item.album.id %}"
+                           class="btn btn-sm btn-outline-danger">
+                           ❌ Xóa
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mt-4">
+        <h4 class="text-success">Tổng cộng: {{ total_amount }} VNĐ</h4>
+        <div>
+            <a href="{% url 'checkout' %}" class="btn btn-lg btn-success me-2">💳 Thanh toán</a>
+            <a href="{% url 'albums' %}" class="btn btn-lg btn-secondary">⬅ Tiếp tục mua sắm</a>
+        </div>
+    </div>
+    {% else %}
+    <div class="alert alert-info text-center">
+        <p>Giỏ hàng của bạn đang trống.</p>
+        <a href="{% url 'albums' %}" class="btn btn-primary mt-2">🎵 Xem album</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

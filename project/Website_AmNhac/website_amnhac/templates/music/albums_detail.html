@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} {{ album.title }} - {{ album.artist.name }} {% endblock %}
+
+{% block content %}
+<section class="album-detail section-padding-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 ">
+                <h2>{{ album.title }}</h2>
+                <h3><strong>Artist:</strong> {{ album.artist.name }}</h3>
+                <h5><strong>Release Year:</strong> {{ album.release_year }}</h5>
+                <h6><strong>Price:</strong> {{ album.price }} VND</h6>
+                {% if album.cover %}
+                    <img src="{{ album.cover.url }}" alt="{{ album.title }}" class="img-fluid mb-4">
+                {% endif %}
+
+                <!-- Back button -->
+                <a href="{% url 'albums' %}" class="btn oneMusic-btn mt-3">
+                    ← Back to album list
+                </a>
+                 <a href="{% url 'add_to_cart' album.id %}" class="btn btn-primary mt-3">
+                <i class="fa fa-shopping-bag me-2"></i> Add to cart
+            </a>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-12">
+                <h3>Tracklist</h3>
+                <ul class="list-group">
+                    {% for song in songs %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            {{ song.title }}
+                            {% if song.audio_file %}
+                                <audio controls>
+                                    <source src="{{ song.audio_file.url }}" type="audio/mpeg">
+                                </audio>
+                            {% endif %}
+                        </li>
+                    {% empty %}
+                        <li class="list-group-item">No songs available in this album.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

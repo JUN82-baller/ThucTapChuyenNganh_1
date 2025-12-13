@@ -1,0 +1,34 @@
+<div class="container mt-5">
+    <div class="card shadow-lg border-0">
+        <div class="card-body">
+            <!-- Thông tin album -->
+            <h2 class="text-primary mb-3">
+                     {{ album.title }} - <span class="text-dark">{{ album.artist.name }}</span>
+            </h2>
+            <p><strong>Năm phát hành:</strong> {{ album.release_year }}</p>
+
+            {% if song %}
+                <!-- Thông tin bài hát -->
+                <div class="song-info bg-light p-3 rounded mb-4">
+                    <h4 class="text-success">Bài hát đầu tiên</h4>
+                    <p><strong>Tên bài hát:</strong> {{ song.title }}</p>
+                    {% if song.duration %}
+                        <p><strong>Thời lượng:</strong> {{ song.duration }}</p>
+                    {% endif %}
+                </div>
+
+                <!-- Audio player -->
+                <div class="audio-player text-center">
+                    <audio controls preload="auto" class="w-75">
+                        <source src="{{ song.audio_file.url }}" type="audio/mpeg">
+                        Trình duyệt của bạn không hỗ trợ phát nhạc.
+                    </audio>
+                </div>
+            {% else %}
+                <div class="alert alert-warning mt-3">
+                    Album này chưa có bài hát nào.
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
