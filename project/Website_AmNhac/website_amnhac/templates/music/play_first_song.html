@@ -1,34 +1,60 @@
+{% extends "base.html" %}
+{% block content %}
 <div class="container mt-5">
-    <div class="card shadow-lg border-0">
-        <div class="card-body">
-            <!-- Thông tin album -->
-            <h2 class="text-primary mb-3">
-                     {{ album.title }} - <span class="text-dark">{{ album.artist.name }}</span>
-            </h2>
-            <p><strong>Năm phát hành:</strong> {{ album.release_year }}</p>
+    <div class="row justify-content-center">
+        <div class="col-9">
+            <div class="card shadow-lg border-0">
+                <!-- Header -->
+                <div class="card-header bg-primary text-white text-center">
+                    <h3 class="mb-0">
+                        🎵 {{ album.title }}
+                        <small class="text-light">- {{ album.artist.name }}</small>
+                    </h3>
+                </div>
 
-            {% if song %}
-                <!-- Thông tin bài hát -->
-                <div class="song-info bg-light p-3 rounded mb-4">
-                    <h4 class="text-success">Bài hát đầu tiên</h4>
-                    <p><strong>Tên bài hát:</strong> {{ song.title }}</p>
-                    {% if song.duration %}
-                        <p><strong>Thời lượng:</strong> {{ song.duration }}</p>
+                <!-- Body -->
+                <div class="card-body p-4">
+                    <p class="mb-3">
+                        <strong>📅 Năm phát hành:</strong> {{ album.release_year }}
+                    </p>
+
+                    {% if song %}
+                        <!-- Song info -->
+                        <div class="bg-light p-3 rounded mb-4 border">
+                            <h4 class="text-success mb-3">🎶 Bài hát đầu tiên</h4>
+                            <p><strong>Tên bài hát:</strong> {{ song.title }}</p>
+
+                        </div>
+
+                        <!-- Audio player -->
+                       <div class="text-center mb-4">
+                            <audio controls preload="auto" class=" border rounded shadow-sm">
+                                <source src="{{ song.audio_file.url }}" type="audio/mpeg">
+                                Trình duyệt của bạn không hỗ trợ phát nhạc.
+                            </audio>
+                        </div>
+                        <!-- Add to cart + Buy now -->
+                        <div class="text-center">
+                            <a href="{% url 'add_to_cart' album.id %}" class="btn btn-success btn-lg me-2">
+                                🛒 Thêm vào giỏ hàng
+                            </a>
+                            <a href="{% url 'checkout' %}" class="btn btn-outline-primary btn-lg">
+                                💳 Mua ngay
+                            </a>
+                        </div>
+                    {% else %}
+                        <div class="alert alert-warning text-center mt-3">
+                            🚫 Album này chưa có bài hát nào.
+                        </div>
                     {% endif %}
                 </div>
 
-                <!-- Audio player -->
-                <div class="audio-player text-center">
-                    <audio controls preload="auto" class="w-75">
-                        <source src="{{ song.audio_file.url }}" type="audio/mpeg">
-                        Trình duyệt của bạn không hỗ trợ phát nhạc.
-                    </audio>
+                <!-- Footer -->
+                <div class="card-footer text-muted text-center">
+                    Website Âm Nhạc 🎶 — Cảm ơn bạn đã lắng nghe
                 </div>
-            {% else %}
-                <div class="alert alert-warning mt-3">
-                    Album này chưa có bài hát nào.
-                </div>
-            {% endif %}
+            </div>
         </div>
     </div>
 </div>
+{% endblock %}
