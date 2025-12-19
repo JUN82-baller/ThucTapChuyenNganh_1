@@ -1,6 +1,53 @@
-<h2>Thanh toán</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-success">Xác nhận thanh toán</button>
-</form>
+{% extends "base.html" %}
+{% load widget_tweaks %}
+{% block content %}
+<div class="container mt-6">
+    <h2 class="mb-4 text-center">💳 Xác nhận thanh toán</h2>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4">
+                    <form method="post" novalidate>
+                        {% csrf_token %}
+
+                        <div class="mb-3">
+                            <label for="id_name" class="form-label">👤 Họ và tên</label>
+                            {{ form.name|add_class:"form-control" }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="id_email" class="form-label">📧 Email</label>
+                            {{ form.email|add_class:"form-control" }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="id_mobile" class="form-label">📱 Số điện thoại</label>
+                            {{ form.mobile|add_class:"form-control" }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="id_address" class="form-label">🏠 Địa chỉ</label>
+                            {{ form.address|add_class:"form-control" }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="id_payment_method" class="form-label">💳 Phương thức thanh toán</label>
+                            {{ form.payment_method|add_class:"form-select" }}
+                        </div>
+
+                        <div class="text-center mt-4">
+                            <button type="submit" class="btn btn-lg btn-success px-5">
+                                ✅ Xác nhận thanh toán
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer text-muted text-center">
+                    Cảm ơn bạn đã mua sắm tại Website Âm Nhạc 🎶
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
