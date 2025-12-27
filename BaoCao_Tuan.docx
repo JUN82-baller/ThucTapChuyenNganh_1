@@ -11,5 +11,23 @@ Báo cáo tuần 3:
 Báo cáo tuần 4:
   1. Thêm phần admin
   2. Tạo templates
-  3. phân chia backedn, frontedn thành 2 file khác nhau
-  4. Thêm framework Vue
+  3. Nhúng templates vào framework
+Báo cáo tuần 5:
+  1. route các url, thể hiện được trang web tĩnh
+  2. Đăng nhập vào admin framework django
+Báo cáo tuần 6:
+  1.Kiểm tra tiến độ
+  2.Training phần database
+Báo cáo tuần 7:
+  1.Thực hiện kết nối database
+  2.Thêm các chức năng vào trang album_store , biến web tĩnh thành động 
+  3.Thêm databse hiển thị được trên website
+  4.Training tạo form, CRUD
+Báo cáo tuần 8:
+  1.Kiểm tra tiến độ code ( tạo file xem chi tiết sản phẩm, hiển thị danh mục)
+Báo cáo tuần 9:
+  1.Kiểm tra tiến độ code
+  2. Tạo các luồng giỏ hàng, thông tin đơn hàng, xác nhận đơn hàng
+Báo cáo tuần 10:
+  1. Kiểm tra tiến độ chức năng giỏ hàng, chỉnh sửa lai giao diện
+  2. Tiến hành viết báo cáo
