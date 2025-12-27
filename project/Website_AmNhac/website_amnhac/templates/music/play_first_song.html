@@ -1,5 +1,56 @@
-{% extends "base.html" %}
-{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ album.title }} - Chi tiết Album</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="bg-light">
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="{% url 'home' %}">
+      ONE SOUND
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'albums' %}"><i class="fa fa-music"></i> Albums</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'cart' %}"><i class="fa fa-shopping-cart"></i> Giỏ hàng</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'checkout' %}"><i class="fa fa-credit-card"></i> Thanh toán</a>
+        </li>
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'account' %}"><i class="fa fa-user"></i> Tài khoản</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'logout' %}"><i class="fa fa-sign-out-alt"></i> Đăng xuất</a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'login' %}"><i class="fa fa-sign-in-alt"></i> Đăng nhập</a>
+        </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Nội dung Album -->
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-9">
@@ -23,23 +74,23 @@
                         <div class="bg-light p-3 rounded mb-4 border">
                             <h4 class="text-success mb-3">🎶 Bài hát đầu tiên</h4>
                             <p><strong>Tên bài hát:</strong> {{ song.title }}</p>
-
                         </div>
 
                         <!-- Audio player -->
-                       <div class="text-center mb-4">
-                            <audio controls preload="auto" class=" border rounded shadow-sm">
+                        <div class="text-center mb-4">
+                            <audio controls preload="auto" class="border rounded shadow-sm w-100">
                                 <source src="{{ song.audio_file.url }}" type="audio/mpeg">
                                 Trình duyệt của bạn không hỗ trợ phát nhạc.
                             </audio>
                         </div>
+
                         <!-- Add to cart + Buy now -->
                         <div class="text-center">
                             <a href="{% url 'add_to_cart' album.id %}" class="btn btn-success btn-lg me-2">
-                                🛒 Thêm vào giỏ hàng
+                                <i class="fa fa-cart-plus"></i> Thêm vào giỏ hàng
                             </a>
                             <a href="{% url 'checkout' %}" class="btn btn-outline-primary btn-lg">
-                                💳 Mua ngay
+                                <i class="fa fa-credit-card"></i> Mua ngay
                             </a>
                         </div>
                     {% else %}
@@ -51,10 +102,14 @@
 
                 <!-- Footer -->
                 <div class="card-footer text-muted text-center">
-                    Website Âm Nhạc 🎶 — Cảm ơn bạn đã lắng nghe
+                    Website ONE SOUND 🎶 — Cảm ơn bạn đã lắng nghe
                 </div>
             </div>
         </div>
     </div>
 </div>
-{% endblock %}
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
