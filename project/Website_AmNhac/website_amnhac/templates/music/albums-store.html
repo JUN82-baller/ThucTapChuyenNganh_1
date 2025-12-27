@@ -172,15 +172,16 @@
                         </div>
                         <div class="song-play-area">
                             {% for song in album.songs.all %}
+                            {% if forloop.first %}
                             <div class="song-name">
                                 <p>{{song.title}}</p>
                             </div>
                             <audio preload="auto" controls>
                                 <source src="{{song.audio_file.url}}">
                             </audio>
+                            {% endif %}
                         </div>
                         {% endfor %}
-                    </div>
                 </div>
             </div>
             {% endfor %}
