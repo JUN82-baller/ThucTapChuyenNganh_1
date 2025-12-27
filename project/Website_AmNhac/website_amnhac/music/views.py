@@ -12,11 +12,16 @@ from django.contrib.auth.models import User
 
 
 def home(request):
-    """Trang chủ"""
     featured_artist = Artist.objects.first()
+    featured_song = None
+    if featured_artist and featured_artist.albums.exists():
+        first_album = featured_artist.albums.first()
+        if first_album.songs.exists():
+            featured_song = first_album.songs.first()
     albums = Album.objects.all()[:12]
     return render(request, "music/index.html", {
-        "featured_artist":featured_artist,
+        "featured_artist": featured_artist,
+        "featured_song": featured_song,
         "albums": albums
     })
 
