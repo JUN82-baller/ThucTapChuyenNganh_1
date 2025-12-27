@@ -3,9 +3,11 @@ from django.core.paginator import Paginator
 from django.forms import inlineformset_factory
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
+from pyexpat.errors import messages
+from django.contrib import messages
 from .forms import AlbumForm, SongForm, ArtistForm, RegisterForm, SongFormSet, OrderForm
 from .models import Album, Song, Artist, CartItem,Order,OrderItem
-from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
 
@@ -233,22 +235,30 @@ def remove_from_cart(request, album_id):
 
 
 def update_cart(request, album_id):
-    quantity = int(request.POST.get("quantity", 1))
     album = get_object_or_404(Album, id=album_id)
+    quantity = int(request.POST.get("quantity", 1))
+
+    if quantity < 1:
+        messages.warning(request, "Số lượng cập nhật không hợp lệ")
+        return redirect("cart")
 
     if request.user.is_authenticated:
-
-        cart_item = get_object_or_404(CartItem, user=request.user, album=album)
-        cart_item.quantity = quantity
-        cart_item.save()
+        cart_item = CartItem.objects.filter(user=request.user, album=album).first()
+        if cart_item:
+            cart_item.quantity = quantity
+            cart_item.save()
+            messages.success(request, f"Cập nhật {album.title} thành {quantity} sản phẩm.")
+        else:
+            messages.warning(request, f"{album.title} chưa có trong giỏ hàng.")
     else:
-
         cart = request.session.get("cart", {})
         if str(album_id) in cart:
             cart[str(album_id)] = quantity
             request.session["cart"] = cart
+            messages.success(request, f"Cập nhật {album.title} thành {quantity} sản phẩm.")
 
     return redirect("cart")
+
 
 def get_cart_total(request):
     """Hàm tính tổng tiền giỏ hàng hiện tại"""
