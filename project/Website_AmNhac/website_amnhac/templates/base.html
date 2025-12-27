@@ -84,6 +84,7 @@
                                     <li><a href="{% url 'contact' %}">Contact</a></li>
                                     {% if user.is_authenticated or user.is_staff %}
                                     <li><a href="{% url 'account' %}">User</a></li>
+                                    <li><a href="{% url 'all_orders' %}">Order</a> </li>
                                     {% endif %}
                                     {% if user.is_staff %}
                                     <li><a href="{% url 'customer' %}">Customer</a></li>

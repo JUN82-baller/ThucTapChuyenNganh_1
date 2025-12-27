@@ -9,6 +9,7 @@ from .forms import AlbumForm, SongForm, ArtistForm, RegisterForm, SongFormSet, O
 from .models import Album, Song, Artist, CartItem,Order,OrderItem
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.contrib.admin.views.decorators import staff_member_required
 
 
 def home(request):
@@ -324,3 +325,8 @@ def checkout_success(request, order_id):
 @login_required
 def account_view(request):
     return render(request, 'music/account.html', {"user": request.user})
+
+@staff_member_required
+def all_orders(request):
+    orders = Order.objects.all().order_by("-created_at")
+    return render(request, "music/all_orders.html", {"orders": orders})

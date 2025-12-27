@@ -40,6 +40,7 @@ urlpatterns = [
     path("album/<int:album_id>/delete/", views.delete_album, name="delete_album"),
     path('album/<int:album_id>/play/', views.play_first_song, name='play_first_song'),
     path("album/<int:album_id>/add_to_cart/", views.add_to_cart, name="add_to_cart"),
+    path("orders/all/", views.all_orders, name="all_orders"),
     # Giỏ hàng
     path("cart/", views.cart, name="cart"),
     path("cart/update/<int:album_id>/", views.update_cart, name="update_cart"),
