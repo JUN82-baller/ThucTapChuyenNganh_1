@@ -22,7 +22,7 @@
     <form method="post">
         {% csrf_token %}
         <button type="submit" class="btn btn-danger mt-3">Yes, delete</button>
-        <a href="{% url 'albums' %" class="btn btn-secondary">Cancel</a>
+        <a href="{% url 'albums' %}" class="btn btn-secondary"  onclick="return confirm('Bạn có chắc muốn hủy chỉnh sửa?')">Cancel</a>
     </form>
 </div>
 {% endblock %}
