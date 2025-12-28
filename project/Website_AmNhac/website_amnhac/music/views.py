@@ -133,20 +133,20 @@ def play_first_song(request, album_id):
         'song': first_song
     })
 
-def events(request):
-    return render(request, 'music/events.html')
-
-
-def blog(request):
-    return render(request, 'music/blog.html')
-
-
+# def events(request):
+#     return render(request, 'music/events.html')
+#
+#
+# def blog(request):
+#     return render(request, 'music/blog.html')
+#
+#
 def contact(request):
     return render(request, 'music/contact.html')
 
 def customer(request):
     customers = User.objects.filter(is_staff=False)  # lọc ra user thường
-    return render(request, "music/customer.html", {"customers": customers})
+    return render(request, "music/customer.html", {"customers": customers}) 
 
 def register_view(request):
     if request.method == "POST":

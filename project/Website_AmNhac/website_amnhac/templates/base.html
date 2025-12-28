@@ -69,19 +69,15 @@
                                 <ul>
                                     <li><a href="{% url 'home' %}">Home</a></li>
                                     <li><a href="{% url 'albums' %}">Albums</a></li>
+                                    <li><a href="{% url 'contact' %}">Contact</a> </li>
                                     <li><a href="#">Pages</a>
                                         <ul class="dropdown">
                                             <li><a href="{% url 'home' %}">Home</a></li>
                                             <li><a href="{% url 'albums' %}">Albums</a></li>
-                                            <li><a href="{% url 'events' %}">Events</a></li>
-                                            <li><a href="{% url 'blog' %}">News</a></li>
-                                            <li><a href="{% url 'contact' %}">Contact</a></li>
-                                           
+                                           <li><a href="{% url 'contact' %}">Contact</a> </li>
                                         </ul>
                                     </li>
-                                    <li><a href="{% url 'events' %}">Event</a></li>
-                                    <li><a href="{% url 'blog' %}">News</a></li>
-                                    <li><a href="{% url 'contact' %}">Contact</a></li>
+
                                     {% if user.is_authenticated or user.is_staff %}
                                     <li><a href="{% url 'account' %}">User</a></li>
                                     <li><a href="{% url 'all_orders' %}">Order</a> </li>
@@ -146,9 +142,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                         <ul>
                             <li><a href="{% url 'home' %}">Home</a></li>
                             <li><a href="{% url 'albums' %}">Albums</a></li>
-                            <li><a href="{% url 'events' %}">Event</a></li>
-                            <li><a href="{% url 'blog' %}">News</a></li>
-                            <li><a href="{% url 'contact' %}">Contact</a></li>
+
                           
                         </ul>
                     </div>
