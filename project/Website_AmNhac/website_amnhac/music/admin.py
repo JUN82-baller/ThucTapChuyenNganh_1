@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Artist, Album, Song, Order, OrderItem, Contact, Event, Testimonial
+from .models import Artist, Album, Song, Order, OrderItem, Contact, Event, Testimonial,Blog
 
 
 # Register your models here.
@@ -24,3 +24,4 @@ admin.site.register(OrderItem)
 admin.site.register(Contact)
 admin.site.register(Event)
 admin.site.register(Testimonial)
+admin.site.register(Blog)

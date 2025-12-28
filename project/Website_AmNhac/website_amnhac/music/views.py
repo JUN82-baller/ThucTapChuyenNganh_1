@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .forms import AlbumForm, SongForm, ArtistForm, RegisterForm, SongFormSet, OrderForm, ContactForm
-from .models import Album, Song, Artist, CartItem, Order, OrderItem, Event, Testimonial
+from .models import Album, Song, Artist, CartItem, Order, OrderItem, Event, Testimonial,Blog
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.admin.views.decorators import staff_member_required
@@ -160,7 +160,10 @@ def testionails (request):
     })
 
 def blog(request):
-    return render(request, 'music/blog.html')
+    post = Blog.objects.all().order_by("-created_at")
+    return render(request, 'music/blog.html',{
+        'post' : post
+    })
 
 
 def contact(request):
