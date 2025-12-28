@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from pyexpat.errors import messages
 from django.contrib import messages
-from .forms import AlbumForm, SongForm, ArtistForm, RegisterForm, SongFormSet, OrderForm
+from .forms import AlbumForm, SongForm, ArtistForm, RegisterForm, SongFormSet, OrderForm, ContactForm
 from .models import Album, Song, Artist, CartItem,Order,OrderItem
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -15,6 +15,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 def home(request):
     featured_artist = Artist.objects.first()
     featured_song = None
+    form = ContactForm()
     if featured_artist and featured_artist.albums.exists():
         first_album = featured_artist.albums.first()
         if first_album.songs.exists():
@@ -23,7 +24,8 @@ def home(request):
     return render(request, "music/index.html", {
         "featured_artist": featured_artist,
         "featured_song": featured_song,
-        "albums": albums
+        "albums": albums,
+        "form":form
     })
 
 
@@ -133,16 +135,24 @@ def play_first_song(request, album_id):
         'song': first_song
     })
 
-# def events(request):
-#     return render(request, 'music/events.html')
-#
-#
-# def blog(request):
-#     return render(request, 'music/blog.html')
-#
-#
+def events(request):
+    return render(request, 'music/events.html')
+
+
+def blog(request):
+    return render(request, 'music/blog.html')
+
+
 def contact(request):
-    return render(request, 'music/contact.html')
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Cam on ban da lien he!")
+            return redirect('contact')
+    else:
+        form = ContactForm()
+    return render(request, 'music/contact.html', {'form': form})
 
 def customer(request):
     customers = User.objects.filter(is_staff=False)  # lọc ra user thường
@@ -330,3 +340,4 @@ def account_view(request):
 def all_orders(request):
     orders = Order.objects.all().order_by("-created_at")
     return render(request, "music/all_orders.html", {"orders": orders})
+
