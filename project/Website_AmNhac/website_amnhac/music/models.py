@@ -1,3 +1,5 @@
+from encodings.punycode import selective_find
+
 from django.db import models
 from PIL import Image
 import os
@@ -109,4 +111,21 @@ class Contact(models.Model):
     def __str__(self):
         return f"{self.name} - {self.subject}"
 
+class Event(models.Model):
+    title = models.CharField(max_length=100)
+    place = models.CharField(max_length=100)
+    date = models.DateTimeField()
+    thumbnail = models.ImageField(upload_to='events/')
+    description = models.TextField(blank=True)
 
+    def __str__(self):
+        return f"{self.title} - {self.date}"
+
+class Testimonial(models.Model):
+    name = models.CharField(max_length=100)
+    role = models.CharField(max_length=100, blank=True)
+    content = models.TextField()
+    photo = models.ImageField(upload_to='testimonials',blank=True)
+
+    def __str__(self):
+       return f"{self.name} - {self.role}"

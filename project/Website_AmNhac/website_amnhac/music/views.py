@@ -3,10 +3,9 @@ from django.core.paginator import Paginator
 from django.forms import inlineformset_factory
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
-from pyexpat.errors import messages
 from django.contrib import messages
 from .forms import AlbumForm, SongForm, ArtistForm, RegisterForm, SongFormSet, OrderForm, ContactForm
-from .models import Album, Song, Artist, CartItem,Order,OrderItem
+from .models import Album, Song, Artist, CartItem, Order, OrderItem, Event, Testimonial
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.admin.views.decorators import staff_member_required
@@ -136,8 +135,29 @@ def play_first_song(request, album_id):
     })
 
 def events(request):
-    return render(request, 'music/events.html')
+    testimonial = Testimonial.objects.all()
+    event = Event.objects.all().order_by('-date')
+    form = ContactForm()
+    return render(request, 'music/events.html', {
+        'event':event,
+        'form':form,
+        'testimonial':testimonial
+    })
+def subscribe(request): #tao form cho trang event
+    if request.method =="POST":
+        email = request.POST.get("search") #lay email tu input
+        if email:
 
+            messages.success(request, "Ban da dang ky newsletter thanh cong")
+        else:
+            messages.error(request,"Vui long nhap lai email")
+    return redirect("events")
+
+def testionails (request):
+    testionails = Testimonial.objects.all()
+    return render(request, "music/event.html",{
+        "testinails":testionails
+    })
 
 def blog(request):
     return render(request, 'music/blog.html')

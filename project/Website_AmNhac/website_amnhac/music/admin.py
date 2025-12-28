@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Artist, Album, Song, Order, OrderItem, Contact
+from .models import Artist, Album, Song, Order, OrderItem, Contact, Event, Testimonial
 
 
 # Register your models here.
@@ -22,3 +22,5 @@ class SongAdmin(admin.ModelAdmin):
 admin.site.register(Order)
 admin.site.register(OrderItem)
 admin.site.register(Contact)
+admin.site.register(Event)
+admin.site.register(Testimonial)
